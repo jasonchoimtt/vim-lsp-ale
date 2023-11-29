@@ -114,7 +114,11 @@ function! s:notify_diag_to_ale(bufnr, diags) abort
                 if severity > threshold
                     continue
                 endif
-                let loc.text = '[' . server . '] ' . loc.text
+                " let loc.text = '[' . server . '] ' . loc.text
+
+                " Custom simplified diagnostic format
+                let loc.text = substitute(loc.text, '^typescript:\(.\)[^:]*:\([^:]*\):', '[\1\2] ', '')
+
                 let loc.type = s:get_loc_type(severity)
                 let results += [loc]
                 let idx += 1
